@@ -4,7 +4,7 @@
 
 ## Question 2. What is the difference between a property and a value in CSS?
 
-## Question 3. What is a shorthand property? Give examples.
+## Question 3. What is a shorthand property? Give examples
 
 ## Question 4. What happens if two CSS rules target the same element?
 
