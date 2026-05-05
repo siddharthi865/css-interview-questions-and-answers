@@ -1,22 +1,41 @@
 # Set 17
 
-What is multiple background layering?
-How does background-blend-mode work?
-What is background-attachment: local?
-What is conic-gradient?
-What is repeating-linear-gradient?
-What is repeating-radial-gradient?
-What is mask-composite?
-What is mask-mode?
-What is clip-rule?
-What is fill-rule?
-What is user-select?
-What is touch-action?
-What is scrollbar-gutter?
-What is inset shorthand?
-What is caret-shape?
-How does flexbox resolve flexible lengths?
-What is flex shrink algorithm?
-How does grid auto-placement algorithm work?
-What is implicit track sizing?
-What is grid dense packing?
+## Question 1. What is multiple background layering?
+
+## Question 1. How does background-blend-mode work?
+
+## Question 1. What is background-attachment: local?
+
+## Question 1. What is conic-gradient?
+
+## Question 1. What is repeating-linear-gradient?
+
+## Question 1. What is repeating-radial-gradient?
+
+## Question 1. What is mask-composite?
+
+## Question 1. What is mask-mode?
+
+## Question 1. What is clip-rule?
+
+## Question 1. What is fill-rule?
+
+## Question 1. What is user-select?
+
+## Question 1. What is touch-action?
+
+## Question 1. What is scrollbar-gutter?
+
+## Question 1. What is inset shorthand?
+
+## Question 1. What is caret-shape?
+
+## Question 1. How does flexbox resolve flexible lengths?
+
+## Question 1. What is flex shrink algorithm?
+
+## Question 1. How does grid auto-placement algorithm work?
+
+## Question 1. What is implicit track sizing?
+
+## Question 1. What is grid dense packing?
