@@ -1,22 +1,41 @@
 # Set 5
 
-How does CSS affect rendering performance?
-What is critical CSS?
-How do you optimize CSS for large applications?
-What is the difference between will-change and transform?
-What are repaint and reflow?
-How do you reduce layout shifts?
-What is BEM methodology?
-What is CSS-in-JS?
-What is tree shaking in CSS?
-What are CSS preprocessors?
-What is the difference between SCSS and SASS?
-What are mixins?
-What is CSS Modules?
-What is shadow DOM styling?
-What is container queries?
-What is subgrid?
-What is the difference between content-box and border-box?
-What is progressive enhancement in CSS?
-How does z-index stacking context work?
-How would you design a scalable CSS architecture for a large React application?
+## Question 1. How does CSS affect rendering performance?
+
+## Question 2. What is critical CSS?
+
+## Question 3. How do you optimize CSS for large applications?
+
+## Question 4. What is the difference between will-change and transform?
+
+## Question 5. What are repaint and reflow?
+
+## Question 6. How do you reduce layout shifts?
+
+## Question 7. What is BEM methodology?
+
+## Question 8. What is CSS-in-JS?
+
+## Question 9. What is tree shaking in CSS?
+
+## Question 10. What are CSS preprocessors?
+
+## Question 11. What is the difference between SCSS and SASS?
+
+## Question 12. What are mixins?
+
+## Question 13. What is CSS Modules?
+
+## Question 14. What is shadow DOM styling?
+
+## Question 15. What is container queries?
+
+## Question 16. What is subgrid?
+
+## Question 17. What is the difference between content-box and border-box?
+
+## Question 18. What is progressive enhancement in CSS?
+
+## Question 19. How does z-index stacking context work?
+
+## Question 20. How would you design a scalable CSS architecture for a large React application?

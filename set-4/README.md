@@ -1,22 +1,41 @@
 # Set 4
 
-What is viewport meta tag?
-What is clamp() in CSS?
-What is aspect-ratio property?
-How do you hide elements on mobile only?
-How do you create fluid typography?
-What is the difference between transition and animation?
-What is @keyframes?
-What are animation timing functions?
-What is transform property?
-What is the difference between translate, scale, and rotate?
-What is CSS specificity hierarchy?
-What is !important and why should it be avoided?
-How do inline styles compare in specificity?
-What is cascade in CSS?
-What is inheritance in CSS?
-What are CSS logical properties?
-What is :has() selector?
-What is the difference between :is() and :where()?
-What are custom properties (CSS variables)?
-How does variable scoping work in CSS?
+## Question 1. What is viewport meta tag?
+
+## Question 2. What is clamp() in CSS?
+
+## Question 3. What is aspect-ratio property?
+
+## Question 4. How do you hide elements on mobile only?
+
+## Question 5. How do you create fluid typography?
+
+## Question 6. What is the difference between transition and animation?
+
+## Question 7. What is @keyframes?
+
+## Question 8. What are animation timing functions?
+
+## Question 9. What is transform property?
+
+## Question 10. What is the difference between translate, scale, and rotate?
+
+## Question 11. What is CSS specificity hierarchy?
+
+## Question 12. What is !important and why should it be avoided?
+
+## Question 13. How do inline styles compare in specificity?
+
+## Question 14. What is cascade in CSS?
+
+## Question 15. What is inheritance in CSS?
+
+## Question 16. What are CSS logical properties?
+
+## Question 17. What is :has() selector?
+
+## Question 18. What is the difference between :is() and :where()?
+
+## Question 19. What are custom properties (CSS variables)?
+
+## Question 20. How does variable scoping work in CSS?
