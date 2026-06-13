@@ -25,6 +25,137 @@
 
 ## Question 1. What is opacity?
 
+# Short answer
+
+`opacity` is a CSS property that controls the transparency of an entire element, including its content and descendants. It accepts values from `0` (fully transparent) to `1` (fully opaque).
+
+```css
+.element {
+  opacity: 0.5;
+}
+```
+
+---
+
+# Explanation
+
+The `opacity` property determines how visible an element is when the browser paints it.
+
+- `opacity: 1` → fully visible (default)
+- `opacity: 0` → completely transparent but still exists in the document flow
+- Values between `0` and `1` create varying levels of transparency
+
+Example:
+
+```css
+.card {
+  opacity: 0.7;
+}
+```
+
+The entire card—including text, images, icons, borders, and child elements—will be rendered at 70% opacity.
+
+### Important distinction: `opacity` vs `rgba()` / `hsl()` alpha
+
+Using `opacity` affects the entire element tree:
+
+```css
+.modal {
+  opacity: 0.5;
+}
+```
+
+Everything inside the modal becomes semi-transparent.
+
+If you only want the background to be transparent while keeping text fully visible, use an alpha color:
+
+```css
+.modal {
+  background: rgb(0 0 0 / 50%);
+}
+```
+
+This is generally preferred for overlays and UI components.
+
+### Rendering and interaction behavior
+
+An element with:
+
+```css
+opacity: 0;
+```
+
+- Is invisible
+- Still occupies layout space
+- Still receives pointer events by default
+- Can still receive keyboard focus
+
+For truly hiding an element, consider:
+
+```css
+display: none;
+```
+
+or
+
+```css
+visibility: hidden;
+```
+
+depending on the use case.
+
+### Animations
+
+`opacity` is commonly animated because it creates smooth fade effects and is generally efficient for browsers to render.
+
+```css
+.toast {
+  transition: opacity 200ms ease;
+}
+```
+
+---
+
+# Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .card {
+        inline-size: 250px;
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        transition: opacity 200ms ease;
+      }
+
+      .card:hover {
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h3>Notification</h3>
+      <p>Hover over this card to reduce its opacity.</p>
+    </div>
+  </body>
+</html>
+```
+
+This creates a simple fade effect on hover.
+
+---
+
+# Pitfalls
+
+- **Affects all children:** Text, icons, and images become transparent too.
+- **Invisible ≠ removed:** `opacity: 0` elements can still be clicked and focused.
+- **Accessibility concerns:** Lowering opacity too much can reduce text contrast and readability.
+- **Stacking context:** Any element with `opacity` less than `1` creates a new stacking context, which can affect z-index behavior.
+
 ## Question 2. How is rgba() different from opacity?
 
 ## Question 3. What is cursor property?
