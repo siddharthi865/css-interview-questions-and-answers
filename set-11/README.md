@@ -25,6 +25,132 @@
 
 ## Question 1. What is the difference between a CSS rule and a CSS declaration?
 
+# Short answer
+
+A **CSS rule** is the complete statement that tells the browser _what elements to target and what styles to apply_.
+
+A **CSS declaration** is a single property-value pair inside a rule that defines one specific style.
+
+Example:
+
+```css
+.button {
+  color: white;
+  background: blue;
+}
+```
+
+- **CSS rule:** the entire block (`.button { ... }`)
+- **Declarations:** `color: white;` and `background: blue;`
+
+---
+
+# Explanation
+
+CSS is structured hierarchically:
+
+1. **Selector** → identifies which elements should be styled.
+2. **Declaration block** → contains one or more declarations.
+3. **Declaration** → a property and value pair.
+
+Structure:
+
+```css
+selector {
+  property: value;
+  property: value;
+}
+```
+
+For example:
+
+```css
+.card {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: white;
+}
+```
+
+Breaking it down:
+
+- Selector: `.card`
+- Rule: the entire `.card { ... }`
+- Declaration block:
+
+```css
+{
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: white;
+}
+```
+
+- Individual declarations:
+  - `padding: 1rem;`
+  - `border-radius: 0.5rem;`
+  - `background: white;`
+
+From a browser-engine perspective, the CSS parser converts rules into objects containing:
+
+- A selector list
+- A collection of declarations
+
+The selector determines **matching**, while declarations determine **computed styles**.
+
+---
+
+# Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* CSS Rule */
+      .alert {
+        padding: 1rem; /* Declaration */
+        color: white; /* Declaration */
+        background: crimson; /* Declaration */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="alert">Payment failed. Please try again.</div>
+  </body>
+</html>
+```
+
+In this example:
+
+```css
+.alert {
+  padding: 1rem;
+  color: white;
+  background: crimson;
+}
+```
+
+- One CSS rule
+- Three CSS declarations
+
+---
+
+# Pitfalls
+
+- **Confusing declaration with declaration block**
+  - `color: red;` is a declaration.
+  - `{ color: red; background: blue; }` is a declaration block.
+
+- **Forgetting semicolons**
+  - The last declaration can technically omit a semicolon, but including it improves maintainability and reduces merge errors.
+
+- **Mixing selectors and declarations**
+  - Selectors are not declarations; they are part of the rule structure.
+
+- **Invalid declarations**
+  - Browsers ignore invalid property-value pairs while still applying valid declarations in the same rule.
+
 ## Question 2. How does the browser apply multiple CSS files?
 
 ## Question 3. What happens if a CSS property is invalid?
