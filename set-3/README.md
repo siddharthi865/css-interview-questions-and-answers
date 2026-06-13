@@ -25,6 +25,84 @@
 
 ## Question 1. What is the default direction in Flexbox?
 
+## Short answer
+
+The default direction in Flexbox is **`row`**, meaning items are laid out **horizontally from left to right** (in LTR languages).
+
+---
+
+## Explanation
+
+In Flexbox, the main axis determines how flex items are laid out. By default:
+
+- `flex-direction: row`
+- Main axis = horizontal
+- Items flow from **start to end of the inline direction**
+- In left-to-right (LTR) layouts: **left → right**
+- In right-to-left (RTL) layouts: **right → left**
+
+So the behavior is not strictly “left to right” — it is tied to the document’s **writing mode and directionality**, which is important for internationalization.
+
+### Key implications (senior-level concerns)
+
+- **Layout logic is axis-based, not directional**: Flexbox cares about main/cross axis, not physical directions.
+- **Responsive design impact**: Changing `flex-direction` is often more powerful than rewriting margins.
+- **i18n awareness**: `row` respects `direction: rtl`, which can flip layout automatically.
+- **Accessibility & semantics**: Visual order may differ from DOM order; screen readers follow DOM order, not flex order.
+
+---
+
+## Example
+
+```html
+<div class="container">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+</div>
+```
+
+```css
+.container {
+  display: flex; /* default flex-direction: row */
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #ccc;
+}
+
+.item {
+  background: #4f46e5;
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+}
+```
+
+### Explicit equivalent
+
+```css
+.container {
+  display: flex;
+  flex-direction: row; /* default */
+}
+```
+
+---
+
+## Pitfalls
+
+- **Assuming physical direction (left→right) is always true**
+  - Breaks in RTL locales (Arabic, Hebrew)
+
+- **Reordering visually vs DOM order**
+  - Can confuse keyboard navigation and screen readers if misused
+
+- **Overusing flex-direction changes for layout hacks**
+  - Can lead to harder-to-maintain responsive systems
+
+- **Mixing with `row-reverse` unintentionally**
+  - Can silently reverse UI order and cause UX bugs
+
 ## Question 2. How do you center a div using Flexbox?
 
 ## Question 3. What is the difference between flex-basis and width?
