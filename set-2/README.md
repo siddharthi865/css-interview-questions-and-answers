@@ -25,6 +25,170 @@
 
 ## Question 1. What are different ways to define colors in CSS?
 
+## Short answer
+
+CSS colors can be defined using named colors, HEX, RGB/RGBA, HSL/HSLA, modern functional notations like `lab()`, `lch()`, `oklch()`, and special keywords like `transparent`, `currentColor`.
+
+---
+
+## Explanation
+
+CSS supports multiple color formats, each with different strengths depending on readability, precision, and design system needs.
+
+### 1. Named colors
+
+Predefined keywords like:
+
+```css
+color: red;
+color: rebeccapurple;
+```
+
+- Easy to use
+- Limited palette and not suitable for design systems
+
+---
+
+### 2. Hexadecimal (`#RRGGBB`, `#RGB`, `#RRGGBBAA`)
+
+```css
+color: #ff0000;
+color: #f00;
+color: #ff000080; /* alpha */
+```
+
+- Compact and widely used
+- Good for static design tokens
+- Harder to reason about perceptually (brightness/hue not intuitive)
+
+---
+
+### 3. RGB / RGBA
+
+```css
+color: rgb(255, 0, 0);
+color: rgba(255, 0, 0, 0.5);
+```
+
+- Intuitive for programmatic generation
+- Still not perceptually uniform
+
+---
+
+### 4. HSL / HSLA (Hue, Saturation, Lightness)
+
+```css
+color: hsl(0 100% 50%);
+color: hsla(0 100% 50% / 0.5);
+```
+
+- More intuitive for designers (adjust hue/lightness)
+- Useful for theming (light/dark variants)
+- Still not perceptually uniform in all cases
+
+---
+
+### 5. Modern perceptual color spaces (recommended for design systems)
+
+#### `lab()`
+
+```css
+color: lab(62% 80 70);
+```
+
+#### `lch()`
+
+```css
+color: lch(62% 100 30);
+```
+
+#### `oklch()` (modern best practice for UI systems)
+
+```css
+color: oklch(70% 0.15 250);
+```
+
+- Perceptually uniform (changes in value feel consistent to human vision)
+- Excellent for design tokens, theming, gradients
+- Better contrast control for accessibility
+
+---
+
+### 6. Special keywords
+
+#### `currentColor`
+
+```css
+border: 2px solid currentColor;
+color: blue;
+```
+
+- Inherits the current text color
+- Great for icon systems and reusable components
+
+#### `transparent`
+
+```css
+background: transparent;
+```
+
+- Equivalent to `rgba(0,0,0,0)`
+
+---
+
+## Example
+
+```html
+<div class="card">
+  Button variants
+  <button class="hex">Hex</button>
+  <button class="rgb">RGB</button>
+  <button class="hsl">HSL</button>
+  <button class="oklch">OKLCH</button>
+</div>
+```
+
+```css
+.card {
+  font-family: system-ui;
+  padding: 16px;
+}
+
+button {
+  padding: 8px 12px;
+  border: 2px solid currentColor;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+/* Different color models */
+.hex {
+  color: #3b82f6;
+}
+
+.rgb {
+  color: rgb(59, 130, 246);
+}
+
+.hsl {
+  color: hsl(217 91% 60%);
+}
+
+.oklch {
+  color: oklch(62% 0.18 250);
+}
+```
+
+---
+
+## Pitfalls
+
+- **Inconsistent perception in RGB/HSL**: equal numeric changes don’t feel visually equal.
+- **Legacy browser support for modern spaces**: `oklch()`, `lab()`, `lch()` may not be fully supported in older browsers.
+- **Overusing named colors**: not scalable for design systems.
+- **Alpha transparency surprises**: `#RRGGBBAA` vs `rgba()` differences in tooling and debugging.
+- **Color contrast accessibility**: some combinations in HSL/RGB may fail WCAG even if they “look fine.”
+
 ## Question 2. What is the difference between px, em, and rem?
 
 ## Question 3. What is the difference between % and vw/vh?
