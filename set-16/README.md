@@ -25,6 +25,186 @@
 
 ## Question 1. What is the difference between author, user, and user-agent stylesheets?
 
+# Short answer
+
+CSS styles can come from three primary origins:
+
+- **User-Agent stylesheets**: Default styles provided by the browser (e.g., `<h1>` is bold, `<ul>` has bullets).
+- **Author stylesheets**: Styles written by the website/application developer.
+- **User stylesheets**: Styles defined by the end user to customize browsing (often for accessibility needs, such as larger fonts or high contrast).
+
+The CSS cascade determines which origin wins when multiple styles target the same element.
+
+---
+
+# Explanation
+
+The CSS Cascade considers both **origin** and **importance** when deciding which style is applied.
+
+## 1. User-Agent Stylesheet
+
+Every browser ships with a built-in stylesheet that gives HTML elements default styling.
+
+Example defaults:
+
+```css
+h1 {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+ul {
+  padding-left: 40px;
+  list-style-type: disc;
+}
+```
+
+Without these defaults, a page containing only HTML would appear mostly unstyled.
+
+Typical examples:
+
+- Heading sizes
+- List bullets
+- Form control appearance
+- Default margins on paragraphs and headings
+
+This is why CSS resets or normalizers exist—they reduce inconsistencies between browser defaults.
+
+---
+
+## 2. Author Stylesheet
+
+These are the styles written by developers.
+
+```css
+h1 {
+  font-size: 3rem;
+  color: navy;
+}
+```
+
+Author styles are what most developers work with daily:
+
+- External CSS files
+- `<style>` blocks
+- Inline styles
+- CSS-in-JS solutions
+
+The author stylesheet usually overrides browser defaults because it appears later in the cascade.
+
+---
+
+## 3. User Stylesheet
+
+Users may provide their own CSS preferences.
+
+Examples:
+
+- Larger text for low vision users
+- Custom color schemes
+- High-contrast themes
+- Browser extensions that inject CSS
+
+Example:
+
+```css
+body {
+  font-size: 24px !important;
+}
+```
+
+Historically browsers exposed direct user stylesheet support. Today it's less common, but accessibility tools, browser settings, extensions, and reader modes often achieve similar effects.
+
+---
+
+## Cascade Order
+
+Ignoring layers and specificity for a moment, the simplified cascade precedence is:
+
+| Origin          | Priority         |
+| --------------- | ---------------- |
+| User-Agent      | Lowest           |
+| User            | Middle           |
+| Author          | Higher           |
+| Important rules | Special handling |
+
+More precisely, for conflicting declarations:
+
+1. User-Agent normal
+2. User normal
+3. Author normal
+4. Author `!important`
+5. User `!important`
+
+A user's `!important` rule is intentionally able to override author styles for accessibility reasons.
+
+Example:
+
+```css
+/* Browser */
+p {
+  color: black;
+}
+
+/* Author */
+p {
+  color: blue;
+}
+
+/* User */
+p {
+  color: red !important;
+}
+```
+
+Final color:
+
+```css
+red
+```
+
+because user `!important` has the highest priority.
+
+---
+
+# Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* Author stylesheet */
+      button {
+        background: royalblue;
+        color: white;
+        padding: 0.75rem 1rem;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <button>Submit</button>
+  </body>
+</html>
+```
+
+What happens:
+
+1. Browser (user-agent) gives the button default appearance.
+2. Author stylesheet overrides it with custom colors.
+3. A user accessibility stylesheet could still override those colors if needed.
+
+---
+
+# Pitfalls
+
+- **Assuming browser defaults are identical**: User-agent styles differ slightly across browsers.
+- **Overusing CSS resets**: Aggressive resets can remove useful accessibility defaults.
+- **Ignoring user preferences**: Hard-coding colors, font sizes, or disabling zoom can conflict with user needs.
+- **Misunderstanding `!important`**: User `!important` rules can override author `!important` declarations.
+
 ## Question 2. How does the cascade order work when origin and importance differ?
 
 ## Question 3. What is the difference between computed value and used value?
