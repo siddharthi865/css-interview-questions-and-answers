@@ -25,6 +25,96 @@
 
 ## Question 1. How do you create a loading spinner using CSS?
 
+# Short answer
+
+A CSS loading spinner is typically created by styling an element with a circular border, making one border side a different color, and continuously rotating it using a CSS `@keyframes` animation.
+
+# Explanation
+
+The most common production approach uses:
+
+1. A square element with equal width and height.
+2. `border-radius: 50%` to make it circular.
+3. A semi-transparent border around the circle.
+4. One border edge (usually `border-top`) with a contrasting color.
+5. A continuous rotation animation using `transform: rotate()`.
+
+Why this approach is popular:
+
+- **Simple and lightweight** — no images or SVGs required.
+- **GPU-friendly** — animating `transform` is generally performant because it avoids layout and paint work.
+- **Themeable** — colors, sizes, and speeds can be controlled with CSS custom properties.
+- **Reusable** — easy to wrap in a design system component.
+
+For accessibility:
+
+- A spinner alone does not communicate progress to screen readers.
+- Use `aria-busy="true"` on the loading container.
+- Optionally include visually hidden text such as "Loading..." for assistive technologies.
+- If loading takes significant time, consider showing progress or status updates instead of an indefinite spinner.
+
+# Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      :root {
+        --spinner-size: 2rem;
+        --spinner-color: #2563eb;
+        --spinner-track: #e5e7eb;
+      }
+
+      .spinner {
+        width: var(--spinner-size);
+        height: var(--spinner-size);
+        border: 4px solid var(--spinner-track);
+        border-top-color: var(--spinner-color);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Screen-reader-only utility */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div aria-busy="true" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
+      <span class="sr-only">Loading...</span>
+    </div>
+  </body>
+</html>
+```
+
+# Pitfalls
+
+- **Animating non-transform properties** (e.g., width, height, box-shadow) can be less performant than animating `transform`.
+- **Missing accessibility support** can leave screen-reader users without feedback.
+- **Very fast animations** may feel distracting; 0.8–1.2 seconds per rotation is usually reasonable.
+- Respect user preferences with `prefers-reduced-motion`:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+```
+
 ## Question 2. How do you create skeleton loaders?
 
 ## Question 3. How do you prevent flickering during CSS transitions?
