@@ -25,6 +25,289 @@
 
 ## Question 1. How does browser rendering pipeline work?
 
+# Short answer
+
+The browser rendering pipeline is the sequence of steps a browser follows to convert HTML, CSS, and JavaScript into pixels on the screen:
+
+**Parse HTML → Build DOM → Parse CSS → Build CSSOM → Create Render Tree → Layout (Reflow) → Paint → Composite**
+
+JavaScript can interrupt or trigger parts of this pipeline by modifying the DOM, CSS, or layout-related properties.
+
+---
+
+# Explanation
+
+Understanding the rendering pipeline is important because most frontend performance issues come from forcing the browser to repeat expensive stages like **layout** and **paint**.
+
+## 1. HTML Parsing → DOM Construction
+
+The browser downloads HTML and converts it into a **DOM (Document Object Model)** tree.
+
+```html
+<body>
+  <h1>Hello</h1>
+  <p>World</p>
+</body>
+```
+
+Becomes:
+
+```text
+body
+ ├─ h1
+ └─ p
+```
+
+The DOM represents the document structure and can be modified by JavaScript.
+
+---
+
+## 2. CSS Parsing → CSSOM Construction
+
+The browser parses CSS and creates the **CSS Object Model (CSSOM)**.
+
+```css
+h1 {
+  color: blue;
+}
+```
+
+Becomes an internal tree of CSS rules.
+
+Unlike HTML, CSS is render-blocking because the browser needs styles before it can determine how elements should appear.
+
+---
+
+## 3. Render Tree Creation
+
+The browser combines the **DOM** and **CSSOM** to build a **Render Tree**.
+
+The Render Tree contains only visible elements.
+
+Example:
+
+```html
+<div>Hello</div>
+<div style="display:none">Hidden</div>
+```
+
+The second element exists in the DOM but is excluded from the Render Tree because it is not rendered.
+
+```text
+Render Tree
+ └─ div ("Hello")
+```
+
+---
+
+## 4. Layout (Reflow)
+
+The browser calculates:
+
+- Element size
+- Position
+- Margins
+- Padding
+- Available space
+
+This process is called:
+
+- **Layout** (modern term)
+- **Reflow** (older term)
+
+Example:
+
+```css
+.container {
+  width: 500px;
+}
+```
+
+The browser computes exact pixel values for every visible element.
+
+Layout is relatively expensive because changing one element can affect many others.
+
+---
+
+## 5. Paint
+
+The browser converts visual information into pixels.
+
+It paints:
+
+- Text
+- Colors
+- Borders
+- Shadows
+- Images
+
+Example:
+
+```css
+.box {
+  background: red;
+  border: 1px solid black;
+}
+```
+
+The browser determines what pixels should appear on the screen.
+
+---
+
+## 6. Compositing
+
+Modern browsers use layers.
+
+The compositor combines painted layers and sends them to the GPU for display.
+
+Properties like:
+
+```css
+transform
+opacity
+filter
+```
+
+can often be updated in the compositor stage without triggering layout.
+
+This is why animations using `transform` and `opacity` are generally much smoother.
+
+---
+
+## How JavaScript Affects the Pipeline
+
+JavaScript can trigger different stages depending on what changes.
+
+### DOM Change
+
+```javascript
+element.appendChild(newDiv);
+```
+
+May require:
+
+```text
+DOM → Render Tree → Layout → Paint → Composite
+```
+
+---
+
+### Style Change
+
+```javascript
+element.style.color = "red";
+```
+
+Usually triggers:
+
+```text
+Style Recalculation → Paint → Composite
+```
+
+No layout needed because size doesn't change.
+
+---
+
+### Layout Change
+
+```javascript
+element.style.width = "300px";
+```
+
+Triggers:
+
+```text
+Style Recalculation → Layout → Paint → Composite
+```
+
+Because dimensions changed.
+
+---
+
+### Transform Change
+
+```javascript
+element.style.transform = "translateX(100px)";
+```
+
+Often only triggers:
+
+```text
+Composite
+```
+
+Which is much cheaper.
+
+---
+
+## Rendering Pipeline Visualization
+
+```text
+HTML
+  │
+  ▼
+DOM
+  │
+  ├──────────┐
+  │          │
+CSS      CSSOM
+  │          │
+  └────┬─────┘
+       ▼
+  Render Tree
+       ▼
+     Layout
+       ▼
+      Paint
+       ▼
+   Composite
+       ▼
+     Screen
+```
+
+---
+
+# Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .card {
+        width: 200px;
+        height: 100px;
+        background: steelblue;
+        transition: transform 300ms ease;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card"></div>
+  </body>
+</html>
+```
+
+Why this is performant:
+
+- `transform` avoids layout recalculation.
+- No element dimensions change.
+- Browser can often handle animation in the compositor layer.
+- Produces smoother 60fps animations.
+
+---
+
+# Pitfalls
+
+- **Layout Thrashing:** Reading layout values (`offsetWidth`) immediately after writing styles can force synchronous layout calculations.
+- **Animating layout properties:** Animating `width`, `height`, `top`, or `left` often causes repeated layout and paint operations.
+- **Large paint areas:** Heavy shadows, filters, and large gradients can increase paint cost.
+- **Excessive DOM size:** Large DOM trees increase style calculation and layout time.
+
 ## Question 2. What triggers layout vs paint vs composite?
 
 ## Question 3. What is GPU acceleration in CSS?
