@@ -25,6 +25,137 @@
 
 ## Question 1. What is multiple background layering?
 
+# Short answer
+
+**Multiple background layering** is a CSS feature that allows you to apply **multiple background images, gradients, or both** to a single element by separating them with commas in the `background` or `background-image` property. The first background listed is painted on top, and the last one is painted closest to the element's background color.
+
+---
+
+# Explanation
+
+Before multiple backgrounds were introduced, developers often needed extra wrapper elements or pseudo-elements to achieve layered visual effects. With multiple background layering, a single element can have:
+
+- Decorative patterns
+- Gradient overlays
+- Watermarks
+- Texture layers
+- Hero image overlays
+
+All stacked together without additional markup.
+
+### How layering works
+
+```css
+background-image: layer1, layer2, layer3;
+```
+
+Rendering order:
+
+1. `layer1` → topmost
+2. `layer2`
+3. `layer3` → bottommost
+
+The background color (if specified) sits beneath all background layers.
+
+### Per-layer properties
+
+Properties such as:
+
+- `background-size`
+- `background-position`
+- `background-repeat`
+- `background-attachment`
+- `background-origin`
+- `background-clip`
+
+can also accept comma-separated values, allowing each layer to have different behavior.
+
+Example:
+
+```css
+background-image:
+  url(pattern.svg), linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6)),
+  url(hero.jpg);
+
+background-size:
+  100px 100px,
+  cover,
+  cover;
+```
+
+### Common production use cases
+
+#### Gradient overlay on hero images
+
+Improves text readability without extra DOM elements.
+
+```css
+background-image:
+  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(hero.jpg);
+```
+
+#### Texture + image
+
+```css
+background-image: url(noise.png), url(photo.jpg);
+```
+
+#### Design system decorations
+
+Layer subtle patterns or brand gradients over a base image while keeping markup clean.
+
+### Why senior engineers use it
+
+- Reduces unnecessary wrapper elements.
+- Keeps decorative styling in CSS.
+- Improves maintainability.
+- Works well with design systems and theming.
+- Avoids extra pseudo-elements when only visual layering is needed.
+
+---
+
+# Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .hero {
+        min-height: 300px;
+        display: grid;
+        place-items: center;
+
+        color: white;
+        font-size: 2rem;
+
+        background-image:
+          linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee");
+
+        background-size: cover, cover;
+        background-position: center, center;
+        background-repeat: no-repeat, no-repeat;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">Accessible Hero Banner</section>
+  </body>
+</html>
+```
+
+This creates a dark overlay on top of the image, improving text contrast and readability.
+
+---
+
+# Pitfalls
+
+- **Order matters.** The first background is painted on top, which is the opposite of how some developers initially expect it.
+- **Large image layers increase memory usage** and can affect rendering performance, especially on mobile devices.
+- **Decorative backgrounds are not accessible content.** Important information should not be embedded in background images because screen readers cannot access it.
+- When specifying multiple backgrounds, ensure related properties (`background-size`, `background-position`, etc.) have matching comma-separated values or understand how CSS value repetition works.
+
 ## Question 2. How does background-blend-mode work?
 
 ## Question 3. What is background-attachment: local?
