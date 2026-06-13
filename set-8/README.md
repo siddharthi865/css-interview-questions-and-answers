@@ -25,6 +25,91 @@
 
 ## Question 1. What is clear property?
 
+## Short answer
+
+The `clear` property controls whether an element can be positioned next to floated elements or must be moved below them.
+
+---
+
+## Explanation
+
+`clear` is primarily used in float-based layouts to prevent an element from wrapping around floated elements (`float: left/right`).
+
+When an element has a float applied to siblings, normal document flow allows inline content to wrap around it. The `clear` property forces the element to move below floated elements on the specified side(s).
+
+### Values:
+
+- `none` (default): allows wrapping around floats
+- `left`: moves below left-floated elements
+- `right`: moves below right-floated elements
+- `both`: moves below both left and right floats
+- `inline-start` / `inline-end`: logical properties (modern, writing-mode aware)
+
+### Modern perspective (important for interviews)
+
+- `clear` is largely a **legacy layout tool** from the float era.
+- In modern CSS, it's often replaced by:
+  - Flexbox (`display: flex`)
+  - Grid (`display: grid`)
+  - Block formatting context creation (`display: flow-root`)
+
+- Still relevant for:
+  - legacy codebases
+  - text wrapping around images in articles
+  - email templates
+
+### How it works internally
+
+`clear` influences layout by pushing the element down until it no longer intersects the margin box of floated elements in the specified direction.
+
+---
+
+## Example
+
+### Float layout with `clear: both`
+
+```html
+<div class="container">
+  <img src="https://via.placeholder.com/120" class="float-left" />
+  <p>This text wraps around the image.</p>
+
+  <div class="footer">I must appear below the float.</div>
+</div>
+```
+
+```css
+.float-left {
+  float: left;
+  margin-right: 12px;
+}
+
+.footer {
+  clear: both;
+  background: #f3f3f3;
+  padding: 8px;
+  margin-top: 8px;
+}
+```
+
+### Modern alternative (preferred)
+
+```css
+.container {
+  display: flow-root; /* creates BFC, contains floats */
+}
+```
+
+---
+
+## Pitfalls
+
+- ❌ Overuse of floats + clear leads to fragile layouts
+- ❌ Can cause unexpected vertical gaps due to float clearing behavior
+- ❌ Harder debugging compared to Flex/Grid
+- ❌ `clear` does not work with Flex/Grid children in the same way (floats are removed from layout flow there)
+- ⚠️ Requires clearfix hacks in older patterns (`::after { clear: both; }`)
+- ⚠️ Browser support for logical values (`inline-start/end`) is modern but not relevant in legacy email clients
+
 ## Question 2. What is clearfix hack?
 
 ## Question 3. What is overflow used for clearing floats?
