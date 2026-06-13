@@ -25,6 +25,138 @@
 
 ## Question 1. What is offset-rotate?
 
+# Short answer
+
+`offset-rotate` is a CSS Motion Path property that controls how an element rotates while moving along a path defined by `offset-path`. It determines whether the element automatically aligns with the direction of the path, stays fixed, or applies an additional rotation angle.
+
+Common values:
+
+```css
+offset-rotate: auto;
+offset-rotate: reverse;
+offset-rotate: auto 45deg;
+offset-rotate: 90deg;
+```
+
+---
+
+# Explanation
+
+`offset-rotate` is part of the CSS Motion Path specification and works together with:
+
+- `offset-path` → defines the path
+- `offset-distance` → defines how far along the path the element has moved
+- `offset-anchor` → defines the alignment point
+- `offset-rotate` → controls orientation during movement
+
+Without `offset-rotate`, an object moving along a curved path might not point in the direction it's traveling.
+
+### Values
+
+### `auto`
+
+The element rotates so its forward direction follows the tangent of the path.
+
+```css
+offset-rotate: auto;
+```
+
+Useful for:
+
+- Cars following roads
+- Airplanes following flight paths
+- Animated icons moving along curves
+
+### `reverse`
+
+Like `auto`, but rotated 180°.
+
+```css
+offset-rotate: reverse;
+```
+
+Useful when the graphic faces the opposite direction by default.
+
+### Fixed angle
+
+Keeps the element at a constant rotation regardless of path direction.
+
+```css
+offset-rotate: 90deg;
+```
+
+### Auto with additional angle
+
+Follows the path and then adds an extra rotation.
+
+```css
+offset-rotate: auto 45deg;
+```
+
+Useful when the asset's natural orientation doesn't match the path direction.
+
+---
+
+# Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .scene {
+        width: 500px;
+        height: 250px;
+        border: 1px solid #ccc;
+        position: relative;
+      }
+
+      .car {
+        width: 40px;
+        height: 20px;
+        background: tomato;
+        border-radius: 4px;
+
+        offset-path: path("M20,200 C120,20 380,20 480,200");
+        offset-rotate: auto;
+
+        animation: drive 5s linear infinite;
+      }
+
+      @keyframes drive {
+        to {
+          offset-distance: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scene">
+      <div class="car"></div>
+    </div>
+  </body>
+</html>
+```
+
+The rectangle automatically rotates as it moves along the curve, making it appear to "drive" naturally.
+
+---
+
+# Pitfalls
+
+- **Asset orientation matters:** `auto` assumes the element's forward direction points to the right. If your SVG or image faces another direction, use `auto 90deg`, `auto -90deg`, etc.
+- **Browser support:** Motion Path properties are supported in modern Chrome, Edge, Safari, and Firefox, but verify support requirements for your target browsers.
+- **Performance:** Motion path animations are generally efficient, but very complex SVG paths can increase rendering costs.
+- **Accessibility:** Motion-heavy UI can be distracting. Respect user preferences with `prefers-reduced-motion`.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .car {
+    animation: none;
+  }
+}
+```
+
 ## Question 2. What is animation-composition?
 
 ## Question 3. What is timeline-scope?
