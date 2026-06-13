@@ -25,6 +25,101 @@
 
 ## Question 1. What is a CSS declaration block?
 
+## Short answer
+
+A **CSS declaration block** is the section inside curly braces `{}` that contains one or more CSS declarations (property–value pairs) applied to a selector.
+
+---
+
+## Explanation
+
+A CSS rule is composed of two main parts:
+
+- **Selector** → targets HTML elements (e.g., `.card`, `h1`, `#header`)
+- **Declaration block** → defines _what styles to apply_ to those elements
+
+A declaration block looks like this:
+
+```css
+selector {
+  property: value;
+  property: value;
+}
+```
+
+Each **declaration** inside the block consists of:
+
+- **Property** (e.g., `color`, `margin`, `display`)
+- **Value** (e.g., `red`, `16px`, `flex`)
+
+### Senior-level perspective
+
+The declaration block is not just syntax—it’s the **atomic unit of styling instructions** that the browser parses into computed style rules during the CSS cascade process.
+
+Key things happening inside a declaration block:
+
+- Participates in the **cascade (specificity, origin, importance)**
+- Values are resolved into the **computed style tree**
+- Can include **fallbacks**, custom properties, and functions (`var()`, `calc()`)
+- Is evaluated per element during style recalculation (performance-sensitive in large DOMs)
+
+From a performance standpoint:
+
+- Large or deeply nested rules increase style recalculation cost
+- Repeated or redundant declarations increase memory and compute overhead in style resolution
+
+---
+
+## Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .card {
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 16px;
+        border-radius: 8px;
+        display: flex;
+        gap: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <p>CSS Declaration Block Example</p>
+    </div>
+  </body>
+</html>
+```
+
+In this example:
+
+```css
+.card {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+}
+```
+
+Everything inside `{ ... }` is the **declaration block**.
+
+---
+
+## Pitfalls
+
+- ❌ Missing semicolons can break parsing in some cases (especially before new declarations or in minified CSS)
+- ❌ Invalid property names are ignored silently by the browser
+- ❌ Overloading a block with too many properties can reduce maintainability
+- ❌ Repeated declarations across rules increase specificity conflicts and debugging complexity
+- ❌ Misunderstanding cascade vs declaration block scope (styles can be overridden elsewhere)
+
 ## Question 2. What is the difference between a property and a value in CSS?
 
 ## Question 3. What is a shorthand property? Give examples
