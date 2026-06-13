@@ -25,6 +25,142 @@
 
 ## Question 1. What is scroll-snap-align?
 
+# Short answer
+
+`scroll-snap-align` defines **where an element should snap within a scroll container** when CSS Scroll Snap is enabled. It specifies the alignment point of a snap target relative to the scroll container's snapport (viewport).
+
+Common values:
+
+- `start` – snap the element's start edge to the container's start edge.
+- `center` – snap the element to the center.
+- `end` – snap the element's end edge to the container's end edge.
+- `none` – element is not a snap target.
+
+---
+
+# Explanation
+
+`scroll-snap-align` is used on **child elements** inside a scroll container that has `scroll-snap-type` enabled.
+
+Think of scroll snapping as a carousel or paginated scrolling experience:
+
+1. The parent container declares how snapping should behave using `scroll-snap-type`.
+2. Child elements declare **where they want to snap** using `scroll-snap-align`.
+3. When the user scrolls, the browser automatically adjusts the final scroll position to align the nearest snap point.
+
+Example relationship:
+
+```css
+.container {
+  scroll-snap-type: x mandatory;
+}
+
+.slide {
+  scroll-snap-align: start;
+}
+```
+
+When scrolling stops, each slide's left edge aligns with the container's left edge.
+
+### Axis-specific alignment
+
+You can provide one or two values:
+
+```css
+scroll-snap-align: center;
+```
+
+Applies to both axes.
+
+```css
+scroll-snap-align: start center;
+```
+
+- Block axis: `start`
+- Inline axis: `center`
+
+This is useful in two-dimensional scrolling layouts.
+
+### Typical use cases
+
+- Image carousels
+- Product galleries
+- Full-screen section scrolling
+- Horizontal card scrollers
+- Mobile onboarding flows
+
+### Why it's useful
+
+Compared to JavaScript-based carousels, CSS Scroll Snap:
+
+- Requires less code
+- Uses browser-native scrolling behavior
+- Works well with touch devices
+- Usually provides better performance and accessibility
+
+---
+
+# Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .carousel {
+        display: flex;
+        gap: 1rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+
+        width: 400px;
+        border: 2px solid #ccc;
+      }
+
+      .card {
+        flex: 0 0 100%;
+        height: 200px;
+
+        display: grid;
+        place-items: center;
+
+        font-size: 2rem;
+        background: #f3f4f6;
+
+        scroll-snap-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel">
+      <div class="card">1</div>
+      <div class="card">2</div>
+      <div class="card">3</div>
+    </div>
+  </body>
+</html>
+```
+
+Each card snaps to the center of the scrolling viewport when scrolling stops.
+
+---
+
+# Pitfalls
+
+- **`scroll-snap-align` does nothing without `scroll-snap-type`** on an ancestor scroll container.
+- `mandatory` snapping can feel restrictive if content is larger than the viewport; consider `proximity` for a softer experience.
+- Fixed headers often require `scroll-padding-top` to prevent snapped content from being hidden.
+- Older browsers had partial implementations; modern browsers (Chrome, Firefox, Safari, Edge) have solid support.
+
+Example with a sticky header:
+
+```css
+.page {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 64px;
+}
+```
+
 ## Question 2. What is @property rule?
 
 ## Question 3. What is counter-reset?
